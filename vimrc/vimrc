@@ -1,0 +1,154 @@
+runtime! debian.vim
+
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Plugins
+Plugin 'gmarik/vundle'
+Plugin 'wangshijin/Align'
+Plugin 'wangshijin/vim-matchit'
+Plugin 'wangshijin/nerdcommenter'
+Plugin 'wangshijin/nerdtree'
+Plugin 'wangshijin/vim-surround'
+Plugin 'wangshijin/switch.vim'
+Plugin 'wangshijin/tabular'
+Plugin 'wangshijin/taglist.vim'
+Plugin 'wangshijin/tslime.vim'
+Plugin 'wangshijin/undotree.vim'
+Plugin 'wangshijin/vim-airline'
+Plugin 'wangshijin/vim-fugitive'
+Plugin 'wangshijin/vim-gitgutter'
+Plugin 'wangshijin/vim-indent-guides'
+Plugin 'wangshijin/vim-multiple-cursors'
+Plugin 'wangshijin/vim-nerdtree-tabs'
+Plugin 'wangshijin/xterm-color-table.vim'
+Plugin 'wangshijin/tagbar'
+Plugin 'wangshijin/bclose.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'yuezk/weex.vim'
+Plugin 'mhinz/vim-startify'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-lua-ftplugin'
+Plugin 'elzr/vim-json'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'vim-scripts/a.vim'
+Plugin 'Townk/vim-autoclose'
+Plugin 'troydm/easybuffer.vim'
+Plugin 'ervandew/supertab'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'vim-scripts/lua.vim'
+Plugin 'tomasr/molokai'
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'einars/js-beautify'
+
+Plugin 'dgryski/vim-godef'
+Plugin 'fatih/vim-go'
+
+Plugin 'rust-lang/rust.vim'
+Plugin 'racer-rust/vim-racer'
+
+set nocompatible
+
+if has("syntax")
+    syntax on            " 语法高亮
+endif
+
+
+filetype plugin indent on
+
+" 设置主题和背景
+colorscheme molokai
+set background=dark
+
+" set autoindent            " 设置自动对齐(缩进)：即每行的缩进值与上一行相等；使用 noautoindent 取消设置
+" set smartindent           " 智能对齐方式
+" set whichwrap=b,s,<,>,[,] " 光标从行首和行末时可以跳到另一行去
+                                                      
+set tabstop=4                                         " 设置制表符(tab键)的宽度
+set softtabstop=4                                     " 设置软制表符的宽度
+set shiftwidth=4                                      " (自动) 缩进使用的4个空格
+set cindent                                           " 使用 C/C++ 语言的自动缩进方式
+set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s " 设置C/C++语言的具体缩进方式
+set backspace=2                                       " 设置退格键可用
+set showmatch                                         " 设置匹配模式，显示匹配的括号
+set linebreak                                         " 整词换行
+set mouse=a                                           " 使用鼠标
+set number                                            " 显示行号
+set history=50                                        " 历史记录50条
+set cursorline
+set laststatus=2 
+set ruler
+set showcmd
+set showmode
+set incsearch
+set hlsearch        
+
+inoremap ( ()<ESC>i
+inoremap [ []<ESC>i
+inoremap { {}<ESC>i
+inoremap < <><ESC>i
+inoremap " ""<ESC>i
+inoremap ' ''<ESC>
+
+map be :EasyBufferToggle<cr>
+
+set t_Co=256
+let g:Powline_symbols='fancy'
+let g:SuperTabDefaultCompletionType = "context"
+
+" 使用箭头切换buf
+map <right> :bn<cr>
+map <left> :bp<cr>
+
+" Go 的设置
+autocmd BufWritePre *.go :GoFmt
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds' : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin' : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
+
+autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+autocmd BufWritePre *.json :%!jsonfmt 2>/dev/null
+
+" JSON 配置
+let g:vim_json_syntax_conceal = 0
+
