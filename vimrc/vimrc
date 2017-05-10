@@ -8,6 +8,8 @@ call vundle#rc()
 
 " Plugins
 Plugin 'gmarik/vundle'
+Plugin 'midlang/vim-mid'
+Plugin 'mkideal/vim-log'
 Plugin 'wangshijin/Align'
 Plugin 'wangshijin/vim-matchit'
 Plugin 'wangshijin/nerdcommenter'
@@ -25,14 +27,13 @@ Plugin 'wangshijin/vim-indent-guides'
 Plugin 'wangshijin/vim-multiple-cursors'
 Plugin 'wangshijin/vim-nerdtree-tabs'
 Plugin 'wangshijin/xterm-color-table.vim'
-Plugin 'wangshijin/tagbar'
-Plugin 'wangshijin/bclose.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'yuezk/weex.vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-lua-ftplugin'
 Plugin 'elzr/vim-json'
+Plugin 'wangshijin/tagbar'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'vim-scripts/a.vim'
@@ -45,11 +46,13 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'vim-scripts/lua.vim'
 Plugin 'tomasr/molokai'
+Plugin 'wangshijin/bclose.vim'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'einars/js-beautify'
 
 Plugin 'dgryski/vim-godef'
 Plugin 'fatih/vim-go'
+"Plugin 'moorereason/vim-markdownfmt'
 
 Plugin 'rust-lang/rust.vim'
 Plugin 'racer-rust/vim-racer'
@@ -93,7 +96,6 @@ set hlsearch
 inoremap ( ()<ESC>i
 inoremap [ []<ESC>i
 inoremap { {}<ESC>i
-inoremap < <><ESC>i
 inoremap " ""<ESC>i
 inoremap ' ''<ESC>
 
@@ -140,6 +142,8 @@ let g:tagbar_type_go = {
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_fields = 1
 
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
 vnoremap <Space> zf
@@ -147,8 +151,13 @@ vnoremap <Space> zf
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
 autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
-autocmd BufWritePre *.json :%!jsonfmt 2>/dev/null
 
 " JSON 配置
 let g:vim_json_syntax_conceal = 0
 
+"let g:markdownfmt_autosave=1
+let g:markdownfmt_fail_silently=0
+
+"autocmd BufWritePre *.md :call markdownfmt#Format()
+
+let g:markdown_fenced_languages = ['go', 'c', 'cpp', 'java', 'javascript', 'js=javascript', 'sh', 'bash=sh', 'html', 'xml', 'json']
