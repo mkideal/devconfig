@@ -1,39 +1,36 @@
 runtime! debian.vim
 
-set nocompatible               " be iMproved
-filetype off                   " required!
+set nocompatible
+filetype off
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+set fileencodings=utf8,gbk,gb2312
+
 " Plugins
+
 Plugin 'gmarik/vundle'
-Plugin 'midlang/vim-mid'
-Plugin 'mkideal/vim-log'
-Plugin 'wangshijin/Align'
-Plugin 'wangshijin/vim-matchit'
-Plugin 'wangshijin/nerdcommenter'
-Plugin 'wangshijin/nerdtree'
-Plugin 'wangshijin/vim-surround'
-Plugin 'wangshijin/switch.vim'
-Plugin 'wangshijin/tabular'
-Plugin 'wangshijin/taglist.vim'
-Plugin 'wangshijin/tslime.vim'
-Plugin 'wangshijin/undotree.vim'
-Plugin 'wangshijin/vim-airline'
-Plugin 'wangshijin/vim-fugitive'
-Plugin 'wangshijin/vim-gitgutter'
-Plugin 'wangshijin/vim-indent-guides'
-Plugin 'wangshijin/vim-multiple-cursors'
-Plugin 'wangshijin/vim-nerdtree-tabs'
-Plugin 'wangshijin/xterm-color-table.vim'
+Plugin 'tsaleh/vim-align'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'tpope/vim-surround'
+Plugin 'godlygeek/tabular'
+Plugin 'mbbill/undotree'
+Plugin 'vim-airline/vim-airline'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'guns/xterm-color-table.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'yuezk/weex.vim'
 Plugin 'mhinz/vim-startify'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-lua-ftplugin'
 Plugin 'elzr/vim-json'
-Plugin 'wangshijin/tagbar'
+Plugin 'majutsushi/tagbar'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'vim-scripts/a.vim'
@@ -46,118 +43,138 @@ Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'vim-scripts/lua.vim'
 Plugin 'tomasr/molokai'
-Plugin 'wangshijin/bclose.vim'
+Plugin 'rbgrouleff/bclose.vim'
 Plugin 'maksimr/vim-jsbeautify'
-Plugin 'einars/js-beautify'
-
 Plugin 'dgryski/vim-godef'
 Plugin 'fatih/vim-go'
-"Plugin 'moorereason/vim-markdownfmt'
-
 Plugin 'rust-lang/rust.vim'
-Plugin 'racer-rust/vim-racer'
+Plugin 'jeaye/color_coded'
+Plugin 'NigoroJr/color_coded-colorschemes'
+Plugin 'posva/vim-vue'
+Plugin 'kana/vim-operator-user'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'midlang/vim-mid'
 
 set nocompatible
 
 if has("syntax")
-    syntax on            " 语法高亮
+	syntax on
 endif
-
 
 filetype plugin indent on
 
-" 设置主题和背景
 colorscheme molokai
+
+let g:molokai_original = 1
+
 set background=dark
 
-" set autoindent            " 设置自动对齐(缩进)：即每行的缩进值与上一行相等；使用 noautoindent 取消设置
-" set smartindent           " 智能对齐方式
-" set whichwrap=b,s,<,>,[,] " 光标从行首和行末时可以跳到另一行去
-                                                      
-set tabstop=4                                         " 设置制表符(tab键)的宽度
-set softtabstop=4                                     " 设置软制表符的宽度
-set shiftwidth=4                                      " (自动) 缩进使用的4个空格
-set cindent                                           " 使用 C/C++ 语言的自动缩进方式
-set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s " 设置C/C++语言的具体缩进方式
-set backspace=2                                       " 设置退格键可用
-set showmatch                                         " 设置匹配模式，显示匹配的括号
-set linebreak                                         " 整词换行
-set mouse=a                                           " 使用鼠标
-set number                                            " 显示行号
-set history=50                                        " 历史记录50条
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set cindent
+set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
+set backspace=2
+set showmatch
+set linebreak
+set mouse=a
+set number
+set history=50
 set cursorline
-set laststatus=2 
+set laststatus=2
 set ruler
 set showcmd
 set showmode
 set incsearch
-set hlsearch        
+set hlsearch
 
 inoremap ( ()<ESC>i
 inoremap [ []<ESC>i
 inoremap { {}<ESC>i
 inoremap " ""<ESC>i
-inoremap ' ''<ESC>
+inoremap ' ''<ESC>i
 
-map be :EasyBufferToggle<cr>
+set foldmethod=syntax
+set nofoldenable
+set foldlevel=1
+
+map be :EsayBufferToggle<cr>
 
 set t_Co=256
 let g:Powline_symbols='fancy'
 let g:SuperTabDefaultCompletionType = "context"
 
-" 使用箭头切换buf
-map <right> :bn<cr>
-map <left> :bp<cr>
-
-" Go 的设置
 autocmd BufWritePre *.go :GoFmt
 let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds' : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin' : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
+	\ 'ctagstype': 'go',
+	\ 'kinds': [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro': '.',
+	\ 'kind2scope': {'t': 'ctype', 'n': 'ntype'},
+	\ 'scope2kind': {'ctype': 't', 'ntype': 'n'},
+	\ 'ctagsbin': 'gotags',
+	\ 'ctagsargs': '-sort -silent'
 \ }
 
 let g:go_highlight_functions = 1
+let g:go_highlight_function_arguments = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_fields = 1
+let g:go_highlight_array_whitespace_error = 1
+let g:go_highlight_extra_types = 1
 
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-vnoremap <Space> zf
+nnoremap FileType javascript noremap <buffer> <c-f> :call JsBeautify()<cr>
+nnoremap FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+nnoremap FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
-autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
-autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+map gd :YcmCompleter GoTo<CR>
+map gt :YcmCompleter GetType<CR>
 
-" JSON 配置
 let g:vim_json_syntax_conceal = 0
+let g:markdownfmt_fail_silently = 0
 
-"let g:markdownfmt_autosave=1
-let g:markdownfmt_fail_silently=0
+let g:markdown_fenced_languages = ['go', 'c', 'cpp', 'java', 'javascript', 'js=javascript', 'sh', 'bash=sh', 'html', 'xml', 'json', 'proto', 'sql', 'lua']
 
-"autocmd BufWritePre *.md :call markdownfmt#Format()
+let g:ycm_server_python_interpreter='/usr/local/bin/python'
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
 
-let g:markdown_fenced_languages = ['go', 'c', 'cpp', 'java', 'javascript', 'js=javascript', 'sh', 'bash=sh', 'html', 'xml', 'json']
+let g:clang_format#style_options = {
+	\ "IndentWidth": 4,
+	\ "MaxEmptyLinesToKeep": 1,
+	\ "AllowShortFunctionsOnASingleLine": "true",
+	\ "AlignTrailingComments": "true",
+	\ "AlignOperands": "true",
+	\ "AlwaysBreakTemplateDeclarations" : "true",
+	\ "BreakBeforeBraces" : "Attach",
+	\ "TabWidth": 4,
+	\ "Standard" : "C++11"}
+
+let g:clang_format#auto_format=0
+
+let g:syntastic_error_symbol = '✗'
+
+let g:rustfmt_autosave = 1
+
+let g:color_coded_enabled = 1
+
+syn keyword commonVarying contained VARYING
+hi commonVarying            guifg=#FFFFFF guibg=bg      gui=bold
+if &t_Co > 255
+   hi commonVarying            ctermfg=231 ctermbg=232   cterm=bold
+endif

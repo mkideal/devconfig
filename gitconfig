@@ -1,0 +1,11 @@
+[alias]
+	st = status
+	ci = commit
+	ps = push
+	pl = pull
+	co = checkout
+	br = branch
+	ls = log --pretty=format:'%s' --abbrev-commit --date=format:'%Y/%m/%d %H:%M:%S'
+	ll = log --pretty=format:'%C(cyan)%h%Creset %Cgreen(%cd)%Creset%C(yellow)%d%Creset %s %C(bold)%C(magenta)<%an>%Creset' --abbrev-commit --date=format:'%Y/%m/%d %H:%M:%S'
+[core]
+	ignorecase = false
